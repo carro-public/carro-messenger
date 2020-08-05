@@ -38,7 +38,7 @@ class WhatsAppTwilio
         $message = $this->client->messages->create(
             $to,
             [
-                'from' => isset($from) ? $from : config('laraveltwilio.from'),
+                'from' => $from ?: config('laraveltwilio.from'),
                 'body' => $message
             ]
         );
@@ -61,7 +61,7 @@ class WhatsAppTwilio
         return $this->client->messages->create(
             $prefix . $to,
             [
-                'from' => $prefix . (isset($from) ? $from : config('laraveltwilio.whatsapp_from')),
+                'from' => $prefix . ($from?: config('laraveltwilio.whatsapp_from')),
                 'body' => $message,
                 'mediaUrl' => $mediaUrl
             ]
