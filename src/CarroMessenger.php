@@ -3,6 +3,7 @@
 namespace CarroPublic\CarroMessenger;
 
 use Notification;
+use CarroPublic\CarroMessenger\NotificationServices\WhatsAppTwilioNotification;
 use CarroPublic\CarroMessenger\NotificationServices\WhatsAppMessageBirdNotification;
 
 class CarroMessenger
@@ -40,7 +41,8 @@ class CarroMessenger
         $messagingService = $service.'-'.$channel;
 
         $services = [
-            'messagebird-whatsapp' => WhatsAppMessageBirdNotification::class
+            'messagebird-whatsapp'  => WhatsAppMessageBirdNotification::class,
+            'twilio-whatsapp'       => WhatsAppTwilioNotification::class,
         ];
 
         return data_get($services, $messagingService);

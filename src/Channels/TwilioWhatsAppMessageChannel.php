@@ -4,7 +4,7 @@ namespace CarroPublic\CarroMessenger\Channels;
 
 use Illuminate\Notifications\Notification;
 
-class WhatsAppMessageChannel
+class TwilioWhatsAppMessageChannel
 {
     /**
      * Send the given notification.

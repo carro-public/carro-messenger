@@ -5,13 +5,10 @@ namespace CarroPublic\CarroMessenger\NotificationServices;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Modules\Communication\Models\Communication;
-use CarroPublic\CarroMessenger\Events\MessageWasSent;
-use CarroPublic\CarroMessenger\Facades\WhatsAppMessageBird;
-use CarroPublic\CarroMessenger\Channels\MessageBirdWhatsAppMessageChannel;
+use CarroPublic\CarroMessenger\Facades\WhatsAppTwilio;
+use CarroPublic\CarroMessenger\Channels\TwilioWhatsAppMessageChannel;
 
-
-class WhatsAppMessageBirdNotification extends Notification
+class WhatsAppTwilioNotification extends Notification
 {
     use Queueable;
 
@@ -44,14 +41,22 @@ class WhatsAppMessageBirdNotification extends Notification
     protected $model;
 
     /**
+     * From
+     * 
+     * @var string $from
+     */
+    protected $from;
+
+    /**
      * Create a new notification instance.
      */
     public function __construct(array $data)
     {
         $this->to       = data_get($data, 'to');
         $this->message  = data_get($data, 'message');
-        $this->imageUrl = data_get($data, 'imageurl');
+        $this->imageUrl = data_get($data, 'image_url');
         $this->model    = data_get($data, 'model');
+        $this->from     = data_get($data, 'from');
     }
 
     /**
@@ -61,7 +66,7 @@ class WhatsAppMessageBirdNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [MessageBirdWhatsAppMessageChannel::class];
+        return [TwilioWhatsAppMessageChannel::class];
     }
 
     /**
@@ -73,28 +78,6 @@ class WhatsAppMessageBirdNotification extends Notification
      */
     public function toWhatsApp($notifiable)
     {
-        if (is_null($this->imageUrl)) {
-            $response = WhatsAppMessageBird::sendWhatsAppText($this->to, $this->message);
-            return $this->handleMessageSentEvent($response);
-        }
-
-        $response = WhatsAppMessageBird::sendWhatsAppImage($this->to, $this->imageUrl, $this->message);
-        $this->handleMessageSentEvent($response);
-    }
-
-    /**
-     * Handling MessageWasSend event
-     * 
-     * @param $response
-     * 
-     * @return void
-     */
-    private function handleMessageSentEvent($response)
-    {
-        $model = $this->model;
-
-        if (config('carromessenger.event_is_called') && !is_null($model)) {
-            event(new MessageWasSent($model, $response->id));
-        }
+        WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
     }
 }

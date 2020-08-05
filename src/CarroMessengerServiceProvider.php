@@ -4,6 +4,7 @@ namespace CarroPublic\CarroMessenger;
 
 use Illuminate\Support\ServiceProvider;
 use CarroPublic\CarroMessenger\Providers\EventServiceProvider;
+use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppTwilio;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppMessageBird;
 
 class CarroMessengerServiceProvider extends ServiceProvider
@@ -46,6 +47,13 @@ class CarroMessengerServiceProvider extends ServiceProvider
         $this->app->singleton(
             'whatsappmessagebird', function ($app) {
                 return new WhatsAppMessageBird;
+            }
+        );
+
+        // Register the twilio service
+         $this->app->singleton(
+            'whatsapptwilio', function ($app) {
+                return new WhatsAppTwilio;
             }
         );
 
