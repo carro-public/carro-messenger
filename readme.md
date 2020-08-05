@@ -21,7 +21,22 @@ $ composer require carropublic/carromessenger
 ## Usage
 
 Too easy to use our combo messenger package.. You just need to create a array and pass it.
+
 We will handle all the things.
+
+Here is sample array
+
+``` bash
+$data = [
+    'to'        => '+959XXXXXXXX',
+    'message'   => 'Testing',
+    'service'   => 'twilio',
+    'channel'   => 'whatsapp',
+    'image_url' => 'www.example.com/example.jpg'
+];
+
+CarroMessenger::sendMessage($data);
+```
 
 ## Change log
 
