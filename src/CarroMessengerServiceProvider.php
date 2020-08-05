@@ -3,6 +3,8 @@
 namespace CarroPublic\CarroMessenger;
 
 use Illuminate\Support\ServiceProvider;
+use CarroPublic\CarroMessenger\Providers\EventServiceProvider;
+use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppMessageBird;
 
 class CarroMessengerServiceProvider extends ServiceProvider
 {
@@ -34,9 +36,21 @@ class CarroMessengerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/carromessenger.php', 'carromessenger');
 
         // Register the service the package provides.
-        $this->app->singleton('carromessenger', function ($app) {
-            return new CarroMessenger;
-        });
+        $this->app->singleton(
+            'carromessenger', function ($app) {
+                return new CarroMessenger;
+            }
+        );
+
+        // Register the messagebird service
+        $this->app->singleton(
+            'whatsappmessagebird', function ($app) {
+                return new WhatsAppMessageBird;
+            }
+        );
+
+        // Register event service provider of CarroMessenger
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -57,9 +71,11 @@ class CarroMessengerServiceProvider extends ServiceProvider
     protected function bootForConsole()
     {
         // Publishing the configuration file.
-        $this->publishes([
+        $this->publishes(
+            [
             __DIR__.'/../config/carromessenger.php' => config_path('carromessenger.php'),
-        ], 'carromessenger.config');
+            ], 'carromessenger.config'
+        );
 
         // Publishing the views.
         /*$this->publishes([
