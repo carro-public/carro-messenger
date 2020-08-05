@@ -5,7 +5,10 @@
 [![Build Status][ico-travis]][link-travis]
 [![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+We would like to use [Message bird](https://www.messagebird.com) and [Twilio](https://www.twilio.com/) to send SMS and other messages like WhatsApp, Line.
+
+So, need to create a combo package by combining sdks of theirs.
+CarroMessenger is created for that purpose.
 
 ## Installation
 
@@ -16,6 +19,9 @@ $ composer require carropublic/carromessenger
 ```
 
 ## Usage
+
+Too easy to use our combo messenger package.. You just need to create a array and pass it.
+We will handle all the things.
 
 ## Change log
 
