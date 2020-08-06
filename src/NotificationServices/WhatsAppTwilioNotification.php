@@ -5,6 +5,7 @@ namespace CarroPublic\CarroMessenger\NotificationServices;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use CarroPublic\CarroMessenger\Events\MessageWasSent;
 use CarroPublic\CarroMessenger\Facades\WhatsAppTwilio;
 use CarroPublic\CarroMessenger\Channels\TwilioWhatsAppMessageChannel;
 
@@ -78,6 +79,23 @@ class WhatsAppTwilioNotification extends Notification
      */
     public function toWhatsApp($notifiable)
     {
-        WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
+        $messageId = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
+        $this->handleMessageSentEvent($messageId);
+    }
+
+    /**
+     * Handling MessageWasSend event
+     * 
+     * @param string $messageId
+     * 
+     * @return void
+     */
+    private function handleMessageSentEvent($messageId)
+    {
+        $model = $this->model;
+
+        if (config('carromessenger.event_is_called') && !is_null($model)) {
+            event(new MessageWasSent($model, $messageId));
+        }
     }
 }

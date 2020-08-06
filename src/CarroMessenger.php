@@ -3,6 +3,8 @@
 namespace CarroPublic\CarroMessenger;
 
 use Notification;
+use CarroPublic\CarroMessenger\Events\MessageWasSent;
+use CarroPublic\CarroMessenger\Facades\WhatsAppMessageBird;
 use CarroPublic\CarroMessenger\NotificationServices\WhatsAppTwilioNotification;
 use CarroPublic\CarroMessenger\NotificationServices\WhatsAppMessageBirdNotification;
 
@@ -26,6 +28,23 @@ class CarroMessenger
             ->notify(
                 new $messagingService($data)
             );
+    }
+
+    /**
+     * Send whatsapp template message with Message Bird
+     *
+     * @param array $data
+     * 
+     * @return void
+     */
+    public function sendWhatsAppTemplateSMSViaMsgBird($data)
+    {
+        $response = WhatsAppMessageBird::sendTemplateMessage($data);
+        $model = data_get($data, 'model');
+
+        if (config('carromessenger.event_is_called') && !is_null($model)) {
+            event(new MessageWasSent($model, $response->id));
+        }
     }
 
     /**

@@ -51,7 +51,7 @@ class CarroMessengerServiceProvider extends ServiceProvider
         );
 
         // Register the twilio service
-         $this->app->singleton(
+        $this->app->singleton(
             'whatsapptwilio', function ($app) {
                 return new WhatsAppTwilio;
             }

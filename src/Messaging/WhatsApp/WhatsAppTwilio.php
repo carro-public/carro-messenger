@@ -27,11 +27,11 @@ class WhatsAppTwilio
     /**
      * Send SMS
      * 
-     * @param  string $to
-     * @param  string $message
-     * @param  string $from
+     * @param string $to
+     * @param string $message
+     * @param string $from
      * 
-     * @return  string $messageId
+     * @return string $messageId
      */
     public function sendSMS($to, $message, $from=null)
     {
@@ -43,7 +43,7 @@ class WhatsAppTwilio
             ]
         );
 
-        return $message->sid;
+        return $message->id;
     }
 
     /**
@@ -54,11 +54,12 @@ class WhatsAppTwilio
      * @param string $from
      * @param array  $mediaUrl
      * @param string $prefix
-     * @return void
+     * 
+     * @return string $messageId
      */
     public function sendWhatsAppSMS($to, $message, $mediaUrl=[], $from=null, $prefix='whatsapp:')
     {
-        return $this->client->messages->create(
+        $message = $this->client->messages->create(
             $prefix . $to,
             [
                 'from' => $prefix . ($from?: config('carromessenger.twilio.whatsapp_from')),
@@ -66,5 +67,7 @@ class WhatsAppTwilio
                 'mediaUrl' => $mediaUrl
             ]
         );
+
+        return $message->id;
     }
 }
