@@ -2,8 +2,6 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
-[![Build Status][ico-travis]][link-travis]
-[![StyleCI][ico-styleci]][link-styleci]
 
 We would like to use [Message bird](https://www.messagebird.com) and [Twilio](https://www.twilio.com/) to send SMS and other messages like WhatsApp, Line.
 

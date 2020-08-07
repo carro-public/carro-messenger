@@ -31,8 +31,8 @@ class WhatsAppMessageBird
      */
     public function __construct()
     {
-        $this->messageBirdClient    = new Client(config('carromessenger.message_bird.access_key'));
-        $this->whatsAppchannelId    = config('carromessenger.message_bird.whatsapp_channel_id');
+        $this->messageBirdClient    = new Client(config('carro_messenger.message_bird.access_key'));
+        $this->whatsAppchannelId    = config('carro_messenger.message_bird.whatsapp_channel_id');
     }
 
     /**
@@ -58,7 +58,7 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($sendMessage);
         } catch (\Exception $e) {
-            echo sprintf("%s: %s", get_class($e), $e->getMessage());
+            Log::error("%s: %s", get_class($e), $e->getMessage());
         }
     }
 
@@ -120,7 +120,7 @@ class WhatsAppMessageBird
         $hsmLanguage->code = data_get($data, 'language_code');
 
         $hsmMessage->templateName = data_get($data, 'template_name');
-        $hsmMessage->namespace = config('carromessenger.message_bird.whatsapp_template_namespace');
+        $hsmMessage->namespace = config('carro_messenger.message_bird.whatsapp_template_namespace');
         $hsmMessage->params = $hsmParams;
         $hsmMessage->language = $hsmLanguage;
 
@@ -135,7 +135,7 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversations->start($message);
         } catch (Exception $e) {
-            echo sprintf("%s: %s", get_class($e), $e->getMessage());
+            Log::error("%s: %s", get_class($e), $e->getMessage());
         }
     }
 }

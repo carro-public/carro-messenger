@@ -34,7 +34,7 @@ class CarroMessengerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/carromessenger.php', 'carromessenger');
+        $this->mergeConfigFrom(__DIR__.'/../config/carro_messenger.php', 'carro_messenger');
 
         // Register the service the package provides.
         $this->app->singleton(
@@ -81,8 +81,8 @@ class CarroMessengerServiceProvider extends ServiceProvider
         // Publishing the configuration file.
         $this->publishes(
             [
-            __DIR__.'/../config/carromessenger.php' => config_path('carromessenger.php'),
-            ], 'carromessenger.config'
+            __DIR__.'/../config/carro_messenger.php' => config_path('carro_messenger.php'),
+            ], 'carro_messenger.config'
         );
     }
 }
