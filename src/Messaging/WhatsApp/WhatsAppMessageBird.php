@@ -119,7 +119,7 @@ class WhatsAppMessageBird
         $hsmLanguage->policy = Language::DETERMINISTIC_POLICY;
         $hsmLanguage->code = data_get($data, 'language_code');
 
-        $hsmMessage->templateName = data_get($data, 'template_name');//'support';
+        $hsmMessage->templateName = data_get($data, 'template_name');
         $hsmMessage->namespace = config('carromessenger.message_bird.whatsapp_template_namespace');
         $hsmMessage->params = $hsmParams;
         $hsmMessage->language = $hsmLanguage;
@@ -137,6 +137,5 @@ class WhatsAppMessageBird
         } catch (Exception $e) {
             echo sprintf("%s: %s", get_class($e), $e->getMessage());
         }
-
     }
 }

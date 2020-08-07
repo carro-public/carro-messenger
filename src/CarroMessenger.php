@@ -40,11 +40,14 @@ class CarroMessenger
     public function sendWhatsAppTemplateSMSViaMsgBird($data)
     {
         $response = WhatsAppMessageBird::sendTemplateMessage($data);
+        
         $model = data_get($data, 'model');
 
         if (config('carromessenger.event_is_called') && !is_null($model)) {
             event(new MessageWasSent($model, $response->id));
         }
+
+        return $response;
     }
 
     /**

@@ -84,23 +84,5 @@ class CarroMessengerServiceProvider extends ServiceProvider
             __DIR__.'/../config/carromessenger.php' => config_path('carromessenger.php'),
             ], 'carromessenger.config'
         );
-
-        // Publishing the views.
-        /*$this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/carropublic'),
-        ], 'carromessenger.views');*/
-
-        // Publishing assets.
-        /*$this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/carropublic'),
-        ], 'carromessenger.views');*/
-
-        // Publishing the translation files.
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/carropublic'),
-        ], 'carromessenger.views');*/
-
-        // Registering package commands.
-        // $this->commands([]);
     }
 }
