@@ -4,6 +4,7 @@ namespace CarroPublic\CarroMessenger;
 
 use Illuminate\Support\ServiceProvider;
 use CarroPublic\CarroMessenger\Providers\EventServiceProvider;
+use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppTwilio;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppMessageBird;
 
 class CarroMessengerServiceProvider extends ServiceProvider
@@ -33,7 +34,7 @@ class CarroMessengerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/carromessenger.php', 'carromessenger');
+        $this->mergeConfigFrom(__DIR__.'/../config/carro_messenger.php', 'carro_messenger');
 
         // Register the service the package provides.
         $this->app->singleton(
@@ -46,6 +47,13 @@ class CarroMessengerServiceProvider extends ServiceProvider
         $this->app->singleton(
             'whatsappmessagebird', function ($app) {
                 return new WhatsAppMessageBird;
+            }
+        );
+
+        // Register the twilio service
+        $this->app->singleton(
+            'whatsapptwilio', function ($app) {
+                return new WhatsAppTwilio;
             }
         );
 
@@ -73,26 +81,8 @@ class CarroMessengerServiceProvider extends ServiceProvider
         // Publishing the configuration file.
         $this->publishes(
             [
-            __DIR__.'/../config/carromessenger.php' => config_path('carromessenger.php'),
-            ], 'carromessenger.config'
+            __DIR__.'/../config/carro_messenger.php' => config_path('carro_messenger.php'),
+            ], 'carro_messenger.config'
         );
-
-        // Publishing the views.
-        /*$this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/carropublic'),
-        ], 'carromessenger.views');*/
-
-        // Publishing assets.
-        /*$this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/carropublic'),
-        ], 'carromessenger.views');*/
-
-        // Publishing the translation files.
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/carropublic'),
-        ], 'carromessenger.views');*/
-
-        // Registering package commands.
-        // $this->commands([]);
     }
 }

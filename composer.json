@@ -4,9 +4,8 @@
     "license": "license",
     "authors": [
         {
-            "name": "author name",
-            "email": "author email",
-            "homepage": "author homepage"
+            "name": "Aung Ko Ko",
+            "email": "aung.koko@carro.co"
         }
     ],
     "homepage": "https://github.com/carropublic/carromessenger",
@@ -18,7 +17,8 @@
         "phpunit/phpunit": "^8.0",
         "mockery/mockery": "^1.1",
         "orchestra/testbench": "~3|~4",
-        "sempro/phpunit-pretty-print": "^1.0"
+        "sempro/phpunit-pretty-print": "^1.0",
+        "messagebird/php-rest-api": "^1.19"
     },
     "autoload": {
         "psr-4": {
