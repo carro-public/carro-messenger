@@ -31,7 +31,7 @@ class WhatsAppTwilio
      * @param string $message
      * @param string $from
      * 
-     * @return string $messageId
+     * @return object $message
      */
     public function sendSMS($to, $message, $from=null)
     {
@@ -43,7 +43,7 @@ class WhatsAppTwilio
             ]
         );
 
-        return $message->id;
+        return $message;
     }
 
     /**
@@ -55,7 +55,7 @@ class WhatsAppTwilio
      * @param array  $mediaUrl
      * @param string $prefix
      * 
-     * @return string $messageId
+     * @return object $message
      */
     public function sendWhatsAppSMS($to, $message, $mediaUrl=[], $from=null, $prefix='whatsapp:')
     {
@@ -68,6 +68,6 @@ class WhatsAppTwilio
             ]
         );
 
-        return $message->id;
+        return $message;
     }
 }

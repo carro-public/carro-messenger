@@ -79,8 +79,8 @@ class WhatsAppTwilioNotification extends Notification
      */
     public function toWhatsApp($notifiable)
     {
-        $messageId = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
-        $this->handleMessageSentEvent($messageId);
+        $message = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
+        $this->handleMessageSentEvent($message->id);
     }
 
     /**
