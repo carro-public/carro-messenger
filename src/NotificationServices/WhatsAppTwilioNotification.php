@@ -94,7 +94,7 @@ class WhatsAppTwilioNotification extends Notification
     {
         $model = $this->model;
 
-        if (config('carromessenger.event_is_called') && !is_null($model)) {
+        if (config('carro_messenger.event_is_called') && !is_null($model)) {
             event(new MessageWasSent($model, $messageId));
         }
     }
