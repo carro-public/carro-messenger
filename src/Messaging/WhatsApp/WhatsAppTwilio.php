@@ -18,8 +18,8 @@ class WhatsAppTwilio
      */
     public function __construct()
     {
-        $sid    = config('carromessenger.twilio.account_sid');
-        $token  = config('carromessenger.twilio.auth_token');
+        $sid    = config('carro_messenger.twilio.account_sid');
+        $token  = config('carro_messenger.twilio.auth_token');
 
         $this->client = new Client($sid, $token); 
     }
@@ -38,7 +38,7 @@ class WhatsAppTwilio
         $message = $this->client->messages->create(
             $to,
             [
-                'from' => $from ?: config('carromessenger.twilio.from'),
+                'from' => $from ?: config('carro_messenger.twilio.from'),
                 'body' => $message
             ]
         );
@@ -62,7 +62,7 @@ class WhatsAppTwilio
         $message = $this->client->messages->create(
             $prefix . $to,
             [
-                'from' => $prefix . ($from?: config('carromessenger.twilio.whatsapp_from')),
+                'from' => $prefix . ($from?: config('carro_messenger.twilio.whatsapp_from')),
                 'body' => $message,
                 'mediaUrl' => $mediaUrl
             ]
