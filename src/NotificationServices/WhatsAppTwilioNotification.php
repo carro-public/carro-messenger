@@ -79,8 +79,8 @@ class WhatsAppTwilioNotification extends Notification
      */
     public function toWhatsApp($notifiable)
     {
-        $message = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
-        $this->handleMessageSentEvent($message->id);
+        $response = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
+        $this->handleMessageSentEvent($response);
     }
 
     /**
@@ -90,12 +90,12 @@ class WhatsAppTwilioNotification extends Notification
      * 
      * @return void
      */
-    private function handleMessageSentEvent($messageId)
+    private function handleMessageSentEvent($response)
     {
         $model = $this->model;
 
         if (config('carro_messenger.event_is_called') && !is_null($model)) {
-            event(new MessageWasSent($model, $messageId));
+            event(new MessageWasSent($model, $response));
         }
     }
 }
