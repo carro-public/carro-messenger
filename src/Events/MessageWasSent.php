@@ -15,11 +15,11 @@ class MessageWasSent
      * Intiating a new instacnce for MessageWasSent
      *
      * @param Model  $sendModel
-     * @param string $messageId
+     * @param mix $response
      */
-    public function __construct($sendModel, string $messageId)
+    public function __construct($sendModel, $response)
     {
         $this->sentModel = $sendModel;
-        $this->messageId = $messageId;
+        $this->response = $response;
     }
 }

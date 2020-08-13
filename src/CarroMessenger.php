@@ -44,7 +44,7 @@ class CarroMessenger
         $model = data_get($data, 'model');
 
         if (config('carro_messenger.event_is_called') && !is_null($model)) {
-            event(new MessageWasSent($model, $response->id));
+            event(new MessageWasSent($model, $response));
         }
 
         return $response;

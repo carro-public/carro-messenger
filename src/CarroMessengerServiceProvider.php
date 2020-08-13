@@ -56,9 +56,6 @@ class CarroMessengerServiceProvider extends ServiceProvider
                 return new WhatsAppTwilio;
             }
         );
-
-        // Register event service provider of CarroMessenger
-        $this->app->register(EventServiceProvider::class);
     }
 
     /**

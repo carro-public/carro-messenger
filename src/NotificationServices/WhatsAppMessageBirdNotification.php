@@ -94,7 +94,7 @@ class WhatsAppMessageBirdNotification extends Notification
         $model = $this->model;
 
         if (config('carro_messenger.event_is_called') && !is_null($model)) {
-            event(new MessageWasSent($model, $response->id));
+            event(new MessageWasSent($model, $response));
         }
     }
 }
