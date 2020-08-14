@@ -40,10 +40,11 @@ class WhatsAppMessageBird
      * 
      * @param string $to
      * @param string $message
+     * @param string $reportUrl
      *
      * @return Object
      */
-    public function sendWhatsAppText($to, $message)
+    public function sendWhatsAppText($to, $message, $reportUrl = null)
     {
         $content = new Content();
         $content->text = $message;
@@ -51,6 +52,7 @@ class WhatsAppMessageBird
         $sendMessage = new SendMessage();
         $sendMessage->from = $this->whatsAppchannelId;
         $sendMessage->to = $to;
+        $sendMessage->reportUrl = $reportUrl;
         $sendMessage->content = $content;
 
         $sendMessage->type = 'text';
@@ -68,10 +70,11 @@ class WhatsAppMessageBird
      * @param string $to
      * @param string $imageUrl
      * @param string $caption
+     * @param string $reportUrl
      *
      * @return Object
      */
-    public function sendWhatsAppImage($to, $imageUrl, $caption = null)
+    public function sendWhatsAppImage($to, $imageUrl, $caption = null, $reportUrl = null)
     {
         $content = new Content();
         $content->image = [
@@ -82,6 +85,7 @@ class WhatsAppMessageBird
         $sendMessage = new SendMessage();
         $sendMessage->from = $this->whatsAppchannelId;
         $sendMessage->to = $to;
+        $sendMessage->reportUrl = $reportUrl;
         $sendMessage->content = $content;
 
         $sendMessage->type = 'image';
