@@ -178,13 +178,13 @@ class WhatsAppWehhook extends Command
      */
     public function getFetchedData($item)
     {
-        $itemData['webhook_id']    = $item->id;
-        $itemData['href']          = $item->href;
-        $itemData['channel_id']    = $item->channelId;
-        $itemData['events']        = implode(" ", $item->events);
-        $itemData['url']           = $item->url;
-        $itemData['created_at']    = $item->createdDatetime;
-
-        return $itemData;
+        return [
+            'webhook_id'    => $item->id,
+            'href'          => $item->href,
+            'channel_id'    => $item->channelId,
+            'events'        => implode(" ", $item->events),
+            'url'           => $item->url,
+            'created_at'    => $item->createdDatetime,
+        ];
     }
 }
