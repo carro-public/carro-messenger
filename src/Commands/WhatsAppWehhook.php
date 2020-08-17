@@ -1,0 +1,190 @@
+<?php
+
+namespace CarroPublic\CarroMessenger\Commands;
+
+use MessageBird\Client;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use MessageBird\Objects\Conversation\Webhook;
+
+class WhatsAppWehhook extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'whatsapp:message-bird:webhooks';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'To manage whatsapp messagebird webhooks';
+
+    /**
+     * Toky app url
+     *
+     * @var string
+     */
+    protected $appUrl;
+
+     /**
+     * MessageBird client
+     *
+     * @var \MessageBird\Client
+     */
+    private $messageBirdClient;
+
+     /**
+     * WhatsApp ChannelId
+     *
+     * @var string
+     */
+    private $whatsAppchannelId;
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        $this->appUrl = config('carro_messenger.webhook_url.webhook_url');
+
+        $this->messageBirdClient    = new Client(config('carro_messenger.message_bird.access_key'));
+
+        $this->whatsAppchannelId    = config('carro_messenger.message_bird.whatsapp_channel_id');
+
+        $actions = ['list', 'get', 'create', 'delete'];
+
+        $action = $this->choice('What kind of event action you want to perform', $actions, 'list');
+
+        call_user_func(__NAMESPACE__ . '\WhatsAppWehhook::'.$action);
+    }
+
+    /**
+     * Performing create a new toky event
+     */
+    private function create()
+    {
+        $events = [
+            Webhook::EVENT_CONVERSATION_CREATED,
+            Webhook::EVENT_CONVERSATION_UPDATED,
+            Webhook::EVENT_MESSAGE_CREATED,
+            Webhook::EVENT_MESSAGE_UPDATED,
+        ];
+
+        $event = $this->choice('What kind of event you want to create', $event);
+        $webhookUrl = $this->ask('Please enter the webhook URL');
+
+        $webhook = new Webhook();
+        $webhook->events    = $events;
+        $webhook->channelId = $this->whatsAppchannelId;
+        $webhook->url       = $webhookUrl;
+
+        try {
+            $response = $this->messageBirdClient->conversationWebhooks->create($webhook);info(['akk' => $response]);
+            $this->info("Webhook is created successfully");
+        } catch (\Exception $e) {
+            Log::error(__CLASS__, [
+                $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Getting Event list from toky
+     */
+    private function list()
+    {
+        try {
+            $response = $this->messageBirdClient->conversationWebhooks->getList();
+
+            if (data_get($response, 'totalCount') == 0) {
+                $this->info("There is no webhooks for now");
+                return;
+            }
+
+            $items = $response->items;
+
+            $data = [];
+            foreach ($items as $item) {
+                array_push($data, $this->getFetchedData($item));
+            }
+
+            $headers = ['webhook_id', 'href', 'channel_id', 'events', 'url', 'created_at'];
+            $this->table($headers, $data);
+
+        } catch (\Exception $e) {
+            Log::error(__CLASS__, [
+                $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Delete Event from toky event list
+     */
+    private function delete()
+    {
+        $webhookId = $this->ask('Please enter Webhook ID');
+
+        try {
+            $response = $this->messageBirdClient->conversationWebhooks->delete($webhookId);
+
+            if ($response) {
+                $this->info("WebhookId {$webhookId} is deleted successfully");
+            }
+
+        } catch (\Exception $e) {
+            Log::error(__CLASS__, [
+                $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Get Event from toky event list
+     */
+    private function get()
+    {
+        $webhookId = $this->ask('Please enter Webhook ID');
+
+        try {
+            $response = $this->messageBirdClient->conversationWebhooks->read($webhookId);
+
+            $data = [];
+            if ($response) {
+                array_push($data, $this->getFetchedData($response));
+
+                $headers = ['webhook_id', 'href', 'channel_id', 'events', 'url', 'created_at'];
+                $this->table($headers, $data);
+            }
+        } catch (\Exception $e) {
+            Log::error(__CLASS__, [
+                $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Fetch response from MessageBird to display with table
+     * 
+     * @param \MessageBird\Objects\Conversation\Webhook
+     * 
+     * @return array $itemData
+     */
+    public function getFetchedData($item)
+    {
+        $itemData['webhook_id']    = $item->id;
+        $itemData['href']          = $item->href;
+        $itemData['channel_id']    = $item->channelId;
+        $itemData['events']        = implode(" ", $item->events);
+        $itemData['url']           = $item->url;
+        $itemData['created_at']    = $item->createdDatetime;
+
+        return $itemData;
+    }
+}

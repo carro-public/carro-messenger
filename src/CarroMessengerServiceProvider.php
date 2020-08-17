@@ -3,12 +3,22 @@
 namespace CarroPublic\CarroMessenger;
 
 use Illuminate\Support\ServiceProvider;
+use CarroPublic\CarroMessenger\Commands\WhatsAppWehhook;
 use CarroPublic\CarroMessenger\Providers\EventServiceProvider;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppTwilio;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppMessageBird;
 
 class CarroMessengerServiceProvider extends ServiceProvider
 {
+    /**
+     * Commands that are needed to register
+     * 
+     * @var array $commands
+     */
+    private $commands = [
+        'CarroPublic\CarroMessenger\Commands\WhatsAppWehhook'
+    ];
+
     /**
      * Perform post-registration booting of services.
      *
@@ -22,9 +32,6 @@ class CarroMessengerServiceProvider extends ServiceProvider
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         // Publishing is only necessary when using the CLI.
-        if ($this->app->runningInConsole()) {
-            $this->bootForConsole();
-        }
     }
 
     /**
@@ -56,6 +63,8 @@ class CarroMessengerServiceProvider extends ServiceProvider
                 return new WhatsAppTwilio;
             }
         );
+
+        $this->commands($this->commands);
     }
 
     /**
