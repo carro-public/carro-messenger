@@ -9,7 +9,6 @@ use MessageBird\Objects\Conversation\HSM\Message;
 use MessageBird\Objects\Conversation\HSM\Params;
 use MessageBird\Objects\Conversation\SendMessage;
 use MessageBird\Objects\Conversation\HSM\Language;
-use MessageBird\Objects\Conversation\Message as ConversationMessage;
 
 class WhatsAppMessageBird
 {
@@ -131,15 +130,15 @@ class WhatsAppMessageBird
 
         $content->hsm = $hsmMessage;
 
-        $message = new ConversationMessage();
-        $message->channelId = $this->whatsAppchannelId;
+        $message = new SendMessage();
         $message->content = $content;
+        $message->from = $this->whatsAppchannelId;
         $message->to = data_get($data, 'to');
         $message->type = 'hsm';
         $message->reportUrl = data_get($data, 'report_url');
 
         try {
-            return $this->messageBirdClient->conversations->start($message);
+            return $this->messageBirdClient->conversationSend->send($message);
         } catch (Exception $e) {
             Log::error("%s: %s", get_class($e), $e->getMessage());
         }
