@@ -5,10 +5,11 @@ namespace CarroPublic\CarroMessenger\Messaging\WhatsApp;
 use MessageBird\Client;
 use Illuminate\Support\Facades\Log;
 use MessageBird\Objects\Conversation\Content;
-use MessageBird\Objects\Conversation\HSM\Params;
 use MessageBird\Objects\Conversation\HSM\Message;
+use MessageBird\Objects\Conversation\HSM\Params;
 use MessageBird\Objects\Conversation\SendMessage;
 use MessageBird\Objects\Conversation\HSM\Language;
+use MessageBird\Objects\Conversation\Message as ConversationMessage;
 
 class WhatsAppMessageBird
 {
@@ -130,11 +131,12 @@ class WhatsAppMessageBird
 
         $content->hsm = $hsmMessage;
 
-        $message = new Message();
+        $message = new ConversationMessage();
         $message->channelId = $this->whatsAppchannelId;
         $message->content = $content;
         $message->to = data_get($data, 'to');
         $message->type = 'hsm';
+        $message->reportUrl = data_get($data, 'report_url');
 
         try {
             return $this->messageBirdClient->conversations->start($message);
