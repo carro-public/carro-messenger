@@ -21,7 +21,7 @@ class WhatsAppWehhook extends Command
      *
      * @var string
      */
-    protected $description = 'To manage whatsapp messagebird webhooks';
+    protected $description = 'Manage whatsapp messagebird webhooks';
 
     /**
      * Toky app url
