@@ -85,12 +85,9 @@ class WhatsAppWehhook extends Command
         $webhook->url       = $webhookUrl;
 
         try {
-            $response = $this->messageBirdClient->conversationWebhooks->create($webhook);info(['akk' => $response]);
-            $this->info("Webhook is created successfully");
+            $response = $this->messageBirdClient->conversationWebhooks->create($webhook);
         } catch (\Exception $e) {
-            Log::error(__CLASS__, [
-                $e->getMessage()
-            ]);
+            $this->error($e->getMessage());
         }
     }
 
@@ -118,9 +115,7 @@ class WhatsAppWehhook extends Command
             $this->table($headers, $data);
 
         } catch (\Exception $e) {
-            Log::error(__CLASS__, [
-                $e->getMessage()
-            ]);
+            $this->error($e->getMessage());
         }
     }
 
@@ -139,9 +134,7 @@ class WhatsAppWehhook extends Command
             }
 
         } catch (\Exception $e) {
-            Log::error(__CLASS__, [
-                $e->getMessage()
-            ]);
+            $this->error($e->getMessage());
         }
     }
 
@@ -163,9 +156,7 @@ class WhatsAppWehhook extends Command
                 $this->table($headers, $data);
             }
         } catch (\Exception $e) {
-            Log::error(__CLASS__, [
-                $e->getMessage()
-            ]);
+            $this->error($e->getMessage());
         }
     }
 
