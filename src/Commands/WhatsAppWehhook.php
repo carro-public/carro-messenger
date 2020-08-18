@@ -80,7 +80,7 @@ class WhatsAppWehhook extends Command
         $webhookUrl = $this->ask('Please enter the webhook URL');
 
         $webhook = new Webhook();
-        $webhook->events    = $events;
+        $webhook->events    = $event;
         $webhook->channelId = $this->whatsAppchannelId;
         $webhook->url       = $webhookUrl;
 
