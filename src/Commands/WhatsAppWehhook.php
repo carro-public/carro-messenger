@@ -76,11 +76,18 @@ class WhatsAppWehhook extends Command
             Webhook::EVENT_MESSAGE_UPDATED,
         ];
 
-        $event = $this->choice('What kind of event you want to create', $events);
-        $webhookUrl = $this->ask('Please enter the webhook URL');
+        $chosenEvents = $this->choice(
+            'What kind of event you want to create',
+            $events,
+            $defaultIndex = null,
+            $maxAttempts = null,
+            $allowMultipleSelections = true
+        );
+
+        $webhookUrl = $this->ask('Please enter the webhook URL'); 
 
         $webhook = new Webhook();
-        $webhook->events    = [$event];
+        $webhook->events    = $chosenEvents;
         $webhook->channelId = $this->whatsAppchannelId;
         $webhook->url       = $webhookUrl;
 
