@@ -3,7 +3,8 @@
 namespace CarroPublic\CarroMessenger;
 
 use Illuminate\Support\ServiceProvider;
-use CarroPublic\CarroMessenger\Commands\WhatsAppWehhook;
+use CarroPublic\CarroMessenger\Commands\TokyWebhook;
+use CarroPublic\CarroMessenger\Commands\WhatsAppWebhook;
 use CarroPublic\CarroMessenger\Providers\EventServiceProvider;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppTwilio;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppMessageBird;
@@ -16,7 +17,8 @@ class CarroMessengerServiceProvider extends ServiceProvider
      * @var array $commands
      */
     private $commands = [
-        'CarroPublic\CarroMessenger\Commands\WhatsAppWehhook'
+        'CarroPublic\CarroMessenger\Commands\WhatsAppWebhook',
+        'CarroPublic\CarroMessenger\Commands\TokyWebhook',
     ];
 
     /**

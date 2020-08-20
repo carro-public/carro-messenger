@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use MessageBird\Objects\Conversation\Webhook;
 
-class WhatsAppWehhook extends Command
+class WhatsAppWebhook extends Command
 {
     /**
      * The name and signature of the console command.
@@ -61,7 +61,7 @@ class WhatsAppWehhook extends Command
 
         $action = $this->choice('What kind of event action you want to perform', $actions, 'list');
 
-        call_user_func(__NAMESPACE__ . '\WhatsAppWehhook::'.$action);
+        call_user_func(__NAMESPACE__ . '\WhatsAppWebhook::'.$action);
     }
 
     /**
