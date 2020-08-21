@@ -3,9 +3,8 @@
 namespace CarroPublic\CarroMessenger;
 
 use Illuminate\Support\ServiceProvider;
-use CarroPublic\CarroMessenger\Commands\TokyWebhook;
-use CarroPublic\CarroMessenger\Commands\WhatsAppWebhook;
 use CarroPublic\CarroMessenger\Providers\EventServiceProvider;
+use CarroPublic\CarroMessenger\Messaging\SmsTwoWay\SmsTelerivet;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppTwilio;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppMessageBird;
 
@@ -34,6 +33,9 @@ class CarroMessengerServiceProvider extends ServiceProvider
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         // Publishing is only necessary when using the CLI.
+        if ($this->app->runningInConsole()) {
+            $this->bootForConsole();
+        }
     }
 
     /**
@@ -63,6 +65,13 @@ class CarroMessengerServiceProvider extends ServiceProvider
         $this->app->singleton(
             'whatsapptwilio', function ($app) {
                 return new WhatsAppTwilio;
+            }
+        );
+
+        // Register the telerivet service
+        $this->app->singleton(
+            'smstelerivet', function ($app) {
+                return new SmsTelerivet;
             }
         );
 
