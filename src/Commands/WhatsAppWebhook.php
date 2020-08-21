@@ -42,7 +42,7 @@ class WhatsAppWebhook extends Command
      *
      * @var string
      */
-    private $whatsAppchannelId;
+    private $whatsAppChannelId;
 
     /**
      * Execute the console command.
@@ -55,7 +55,7 @@ class WhatsAppWebhook extends Command
 
         $this->messageBirdClient    = new Client(config('carro_messenger.message_bird.access_key'));
 
-        $this->whatsAppchannelId    = config('carro_messenger.message_bird.whatsapp_channel_id');
+        $this->whatsAppChannelId    = config('carro_messenger.message_bird.whatsapp_channel_id');
 
         $actions = ['list', 'get', 'create', 'delete'];
 
@@ -88,7 +88,7 @@ class WhatsAppWebhook extends Command
 
         $webhook = new Webhook();
         $webhook->events    = $chosenEvents;
-        $webhook->channelId = $this->whatsAppchannelId;
+        $webhook->channelId = $this->whatsAppChannelId;
         $webhook->url       = $webhookUrl;
 
         try {
