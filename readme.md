@@ -3,10 +3,15 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-We would like to use [Message bird](https://www.messagebird.com) and [Twilio](https://www.twilio.com/) to send SMS and other messages like WhatsApp, Line.
+We would like to use [Message bird](https://www.messagebird.com) and [Twilio](https://www.twilio.com/)..
+
+[Telerivet](https://telerivet.com/) for SMS..
+
+[Toky](https://toky.co/en) for phone calls
 
 So, need to create a combo package by combining sdks of theirs.
-CarroMessenger is created for that purpose.
+
+To use multiple messaging services with only one package..
 
 ## Installation
 
@@ -35,20 +40,6 @@ $data = [
 
 CarroMessenger::sendMessage($data);
 ```
-
-## Change log
-
-Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Testing
-
-``` bash
-$ composer test
-```
-
-## Contributing
-
-Please see [contributing.md](contributing.md) for details and a todolist.
 
 ## Security
 
