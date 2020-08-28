@@ -58,7 +58,7 @@ You can read more details for each service..
 ### MessageWasSent event
 
 You would see `model` in some of our samples..
-Read [here](docs/event-listener) why we crated it and how can you use it..
+Read [here](docs/event-listener.md) why we crated it and how can you use it..
 
 
 ## Security
