@@ -55,6 +55,12 @@ You can read more details for each service..
 - [Toky](docs/toky.md)
 
 
+### MessageWasSent event
+
+You would see `model` in some of our samples..
+Read [here](docs/event-listener) why we crated it and how can you use it..
+
+
 ## Security
 
 If you discover any security related issues, please email author email instead of using the issue tracker.
