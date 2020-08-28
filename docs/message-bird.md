@@ -2,7 +2,7 @@
 
 Message bird provides programable webhooks to handle message statuses and incoming message
 
-# Accepting incoming message
+### Accepting incoming message
 
 You can see webhooks list and can create and delete webhooks with this command
 
@@ -14,7 +14,7 @@ You need to careat a webhook events with `crated` to handle incoming message
 
 You can see webhooks list and can create and delete..
 
-# Sending outgoing message
+### Sending outgoing message
 
 Here is how to use carromessenger with message bird..
 
