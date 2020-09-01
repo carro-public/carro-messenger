@@ -3,17 +3,21 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This package can send whatsapp messages and whatsapp tmeplate message using [Message bird](https://www.messagebird.com) and [Twilio](https://www.twilio.com/),
-SMS messages using [Twilio](https://www.twilio.com/) and [Telerivet](https://telerivet.com/).
-And also can create webhooks for programmable wehbooks of [Toky](https://toky.co/en) to handle incoming phone calls.
+You can send WhatsApp messages and template message using [Message bird](https://www.messagebird.com) and [Twilio](https://www.twilio.com/),
+SMS messages using [Twilio](https://www.twilio.com/) and [Telerivet](https://telerivet.com/) using this package. You can create webhooks for programmable webhooks of [Toky](https://toky.co/en) to handle incoming phone calls.
 
-To be used easier, we just need to prepare an array and set service and channel (WhatsApp, SMS, etc) which you would like to use.
-Then, pass it, our package will acutomatically send message as you set correctly.
+You need to prepare an array with service and channel (WhatsApp, SMS, etc) which you would like to use. Then call the `sendMessage()`. You can see an example in the following
 
-## Motivation
-
-We have to use multiple services for multiple message types. Then, handling each service with related package would be easier to maintain for us.
-Wrapping sdks of related services and can be used by one method call is came out as this package
+```php
+$data = [
+    'to'        => '+959XXXXXXXX',
+    'message'   => 'Testing',
+    'service'   => 'twilio',
+    'channel'   => 'whatsapp',
+    'image_url' => 'www.example.com/example.jpg'
+];
+CarroMessenger::sendMessage($data);
+```
 
 ## Installation
 
@@ -48,13 +52,8 @@ TOKY_APP_KEY                    = toky_app_key
 TOKY_APP_URL                    = toky_app_url
 ```
 
-Too easy to use our combo messenger package.. You just need to create a array and pass it.
-
-We will handle all the things.
-
-Here is sample array
-
-``` bash
+Then, create an array to send out the message like the following. It's as simple as that.
+``` php
 $data = [
     'to'        => '+959XXXXXXXX',
     'message'   => 'Testing',
@@ -62,24 +61,22 @@ $data = [
     'channel'   => 'whatsapp',
     'image_url' => 'www.example.com/example.jpg'
 ];
-
 CarroMessenger::sendMessage($data);
 ```
 
-Some services support for message error and status reporting with programmable webhooks.
-You can read more details for each service..
+The following services support for the error message and status report with programmable webhooks. You can read about each individual one by clicking the following list.
 
 - [MessageBird](docs/message-bird.md)
 - [Twilio](docs/twilio.md)
 - [Telerivet](docs/telerivet.md)
 - [Toky](docs/toky.md)
 
+For other services that are not listed above, you may need to rely on events.
 
-### MessageWasSent event
+### Events
 
-You would see `model` in some of our samples..
-Read [here](docs/event-listener.md) why we crated it and how can you use it..
-
+We are extending the Laravel's Notification to sent messages. Therefore, you can't see the success/error with an immediate response. In order to resolve this, we added an event name call `MessageWasSent`. The package will be sent to an event every time you sent the messages. But, you have to set `EVENT_IS_CALLED` as `true` in your `.env`.  Then, you create a listener for that event and handle the result as your needs.
+You can also use [Laravel's Notification Event](https://laravel.com/docs/7.x/notifications#notification-events) as well.
 
 ## Security
 
