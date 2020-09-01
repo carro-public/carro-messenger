@@ -3,17 +3,16 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-We would like to use [Message bird](https://www.messagebird.com) for whatsapp messaging,
+This package can send whatsapp messages and whatsapp tmeplate message using [Message bird](https://www.messagebird.com) and [Twilio](https://www.twilio.com/),
+SMS messages using [Twilio](https://www.twilio.com/) and [Telerivet](https://telerivet.com/).
+And also can create webhooks for [Toky](https://toky.co/en) phone calls to handle incoming phone calls.
 
-[Twilio](https://www.twilio.com/) for SMS(one way)
+To be used easier, we just need to prepare an array and set service and channel (WhatsApp, SMS, etc) which you would like to use.
+Then, pass it, our package will acutomatically send message as you set correctly.
 
-[Telerivet](https://telerivet.com/) for SMS..
+# Motivation
 
-[Toky](https://toky.co/en) for phone calls
-
-So, need to create a combo package by combining sdks of theirs.
-
-To use multiple messaging services with only one package..
+We have to use multiple services for multiple message types. Then, handling each service with related package would be easier to maintain for us.
 
 ## Installation
 
