@@ -1,6 +1,6 @@
 # Message Bird
 
-Message bird provides programable webhooks to handle message statuses and incoming message
+Message bird provides programmable webhooks to handle message statuses and incoming message
 
 ### Accepting incoming message
 

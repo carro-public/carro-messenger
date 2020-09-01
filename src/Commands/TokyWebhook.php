@@ -42,9 +42,9 @@ class TokyWebhook extends Command
      */
     public function handle()
     {
-        $this->appKey = config('toky.app_key');
+        $this->appKey = config('carro_messenger.toky.app_key');
 
-        $this->appUrl = config('toky.app_url');
+        $this->appUrl = config('carro_messenger.toky.app_url');
 
         $actions = ['get', 'create', 'delete'];
 
