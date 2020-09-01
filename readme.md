@@ -10,7 +10,7 @@ And also can create webhooks for programmable wehbooks of [Toky](https://toky.co
 To be used easier, we just need to prepare an array and set service and channel (WhatsApp, SMS, etc) which you would like to use.
 Then, pass it, our package will acutomatically send message as you set correctly.
 
-# Motivation
+## Motivation
 
 We have to use multiple services for multiple message types. Then, handling each service with related package would be easier to maintain for us.
 Wrapping sdks of related services and can be used by one method call is came out as this package
