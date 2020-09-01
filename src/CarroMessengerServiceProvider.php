@@ -4,11 +4,22 @@ namespace CarroPublic\CarroMessenger;
 
 use Illuminate\Support\ServiceProvider;
 use CarroPublic\CarroMessenger\Providers\EventServiceProvider;
+use CarroPublic\CarroMessenger\Messaging\SmsTwoWay\SmsTelerivet;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppTwilio;
 use CarroPublic\CarroMessenger\Messaging\WhatsApp\WhatsAppMessageBird;
 
 class CarroMessengerServiceProvider extends ServiceProvider
 {
+    /**
+     * Commands that are needed to register
+     * 
+     * @var array $commands
+     */
+    private $commands = [
+        'CarroPublic\CarroMessenger\Commands\WhatsAppWebhook',
+        'CarroPublic\CarroMessenger\Commands\TokyWebhook',
+    ];
+
     /**
      * Perform post-registration booting of services.
      *
@@ -56,6 +67,15 @@ class CarroMessengerServiceProvider extends ServiceProvider
                 return new WhatsAppTwilio;
             }
         );
+
+        // Register the telerivet service
+        $this->app->singleton(
+            'smstelerivet', function ($app) {
+                return new SmsTelerivet;
+            }
+        );
+
+        $this->commands($this->commands);
     }
 
     /**

@@ -6,6 +6,7 @@ use Notification;
 use CarroPublic\CarroMessenger\Events\MessageWasSent;
 use CarroPublic\CarroMessenger\Facades\WhatsAppMessageBird;
 use CarroPublic\CarroMessenger\NotificationServices\WhatsAppTwilioNotification;
+use CarroPublic\CarroMessenger\NotificationServices\Sms2WayTelerivetNotification;
 use CarroPublic\CarroMessenger\NotificationServices\WhatsAppMessageBirdNotification;
 
 class CarroMessenger
@@ -65,6 +66,7 @@ class CarroMessenger
         $services = [
             'messagebird-whatsapp'  => WhatsAppMessageBirdNotification::class,
             'twilio-whatsapp'       => WhatsAppTwilioNotification::class,
+            'telerivet-sms2way'     => Sms2WayTelerivetNotification::class,
         ];
 
         return data_get($services, $messagingService);
