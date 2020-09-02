@@ -2,11 +2,14 @@
 
 namespace CarroPublic\CarroMessenger\NotificationServices;
 
+use Exception;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use CarroPublic\CarroMessenger\Events\MessageWasSent;
 use CarroPublic\CarroMessenger\Facades\WhatsAppTwilio;
+use CarroPublic\CarroMessenger\Common\MessageFailedResponse;
 use CarroPublic\CarroMessenger\Channels\TwilioWhatsAppMessageChannel;
 
 class WhatsAppTwilioNotification extends Notification
@@ -79,8 +82,15 @@ class WhatsAppTwilioNotification extends Notification
      */
     public function toWhatsApp($notifiable)
     {
-        $response = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
-        $this->handleMessageSentEvent($response);
+        try {
+            $response = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, [$this->imageUrl], $this->from);
+            $this->handleMessageSentEvent($response);
+        } catch (Exception $e) {
+            Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
+            
+            event(new MessageWasSent($this->model, new MessageFailedResponse()));
+        }
+        
     }
 
     /**
