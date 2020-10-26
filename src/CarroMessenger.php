@@ -2,9 +2,12 @@
 
 namespace CarroPublic\CarroMessenger;
 
+use Exception;
 use Notification;
+use Illuminate\Support\Facades\Log;
 use CarroPublic\CarroMessenger\Events\MessageWasSent;
 use CarroPublic\CarroMessenger\Facades\WhatsAppMessageBird;
+use CarroPublic\CarroMessenger\Common\MessageFailedResponse;
 use CarroPublic\CarroMessenger\NotificationServices\WhatsAppTwilioNotification;
 use CarroPublic\CarroMessenger\NotificationServices\Sms2WayTelerivetNotification;
 use CarroPublic\CarroMessenger\NotificationServices\WhatsAppMessageBirdNotification;
@@ -40,15 +43,22 @@ class CarroMessenger
      */
     public function sendWhatsAppTemplateSMSViaMsgBird($data)
     {
-        $response = WhatsAppMessageBird::sendTemplateMessage($data);
+        try {
+            $response = WhatsAppMessageBird::sendTemplateMessage($data);
         
-        $model = data_get($data, 'model');
+            $model = data_get($data, 'model');
 
-        if (config('carro_messenger.event_is_called') && !is_null($model)) {
-            event(new MessageWasSent($model, $response));
+            if (config('carro_messenger.event_is_called') && !is_null($model)) {
+                event(new MessageWasSent($model, $response));
+            }
+
+            return $response;
+        } catch (Exception $e) {
+            Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
+            
+            event(new MessageWasSent($this->model, new MessageFailedResponse()));
         }
-
-        return $response;
+        
     }
 
     /**

@@ -2,12 +2,15 @@
 
 namespace CarroPublic\CarroMessenger\NotificationServices;
 
+use Exception;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Modules\Communication\Models\Communication;
 use CarroPublic\CarroMessenger\Events\MessageWasSent;
 use CarroPublic\CarroMessenger\Facades\WhatsAppMessageBird;
+use CarroPublic\CarroMessenger\Common\MessageFailedResponse;
 use CarroPublic\CarroMessenger\Channels\MessageBirdWhatsAppMessageChannel;
 
 
@@ -81,13 +84,21 @@ class WhatsAppMessageBirdNotification extends Notification
      */
     public function toWhatsApp($notifiable)
     {
-        if (is_null($this->imageUrl)) {
-            $response = WhatsAppMessageBird::sendWhatsAppText($this->to, $this->message, $this->reportUrl);
-            return $this->handleMessageSentEvent($response);
+        try {
+            if (is_null($this->imageUrl)) {
+                $response = WhatsAppMessageBird::sendWhatsAppText($this->to, $this->message, $this->reportUrl);
+                return $this->handleMessageSentEvent($response);
+            }
+    
+            $response = WhatsAppMessageBird::sendWhatsAppImage($this->to, $this->imageUrl, $this->message, $this->reportUrl);
+            $this->handleMessageSentEvent($response);
+        } catch (Exception $e) {
+            Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
+            
+            event(new MessageWasSent($this->model, new MessageFailedResponse()));
         }
 
-        $response = WhatsAppMessageBird::sendWhatsAppImage($this->to, $this->imageUrl, $this->message, $this->reportUrl);
-        $this->handleMessageSentEvent($response);
+        
     }
 
     /**
