@@ -56,7 +56,7 @@ class CarroMessenger
         } catch (Exception $e) {
             Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
             
-            event(new MessageWasSent($this->model, new MessageFailedResponse()));
+            event(new MessageWasSent($model, new MessageFailedResponse()));
         }
         
     }
