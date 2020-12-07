@@ -60,7 +60,8 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($sendMessage);
         } catch (\Exception $e) {
-            Log::error([get_class($e), $e->getMessage()]);
+            Log::error('Whatsapp Text message failed @'.__FUNCTION__.' of '.__CLASS__,
+            [$e->getMessage()]);
         }
     }
 
@@ -93,7 +94,8 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($sendMessage);
         } catch (\Exception $e) {
-            Log::error([get_class($e), $e->getMessage()]);
+            Log::error('WhatsApp Image message failed @'.__FUNCTION__.' of '.__CLASS__,
+            [$e->getMessage()]);
         }
     }
 
@@ -140,7 +142,8 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($message);
         } catch (Exception $e) {
-            Log::error([get_class($e), $e->getMessage()]);
+            Log::error('Whatsapp Template message failed @'.__FUNCTION__.' of '.__CLASS__,
+            [$e->getMessage()]);
         }
     }
 }
