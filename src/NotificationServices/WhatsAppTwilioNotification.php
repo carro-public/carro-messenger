@@ -88,7 +88,7 @@ class WhatsAppTwilioNotification extends Notification
             $response = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, $imageUrl, $this->from);
             $this->handleMessageSentEvent($response);
         } catch (Exception $e) {
-            Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
+            Log::error([get_class($e), $e->getMessage()]);
             
             event(new MessageWasSent($this->model, new MessageFailedResponse()));
         }

@@ -60,7 +60,7 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($sendMessage);
         } catch (\Exception $e) {
-            Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
+            Log::error([get_class($e), $e->getMessage()]);
         }
     }
 
@@ -93,7 +93,7 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($sendMessage);
         } catch (\Exception $e) {
-            Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
+            Log::error([get_class($e), $e->getMessage()]);
         }
     }
 
@@ -140,7 +140,7 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($message);
         } catch (Exception $e) {
-            Log::error(printf("%s: %s", get_class($e), $e->getMessage()));
+            Log::error([get_class($e), $e->getMessage()]);
         }
     }
 }
