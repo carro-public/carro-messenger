@@ -54,7 +54,7 @@ class CarroMessenger
 
             return $response;
         } catch (Exception $e) {
-            Log::error('WhatsApp template message failed @'. __FUNCTION__.' Class '. __CLASS__,
+            Log::error('WhatsApp template message failed @'. __FUNCTION__.' of '. __CLASS__,
             [$e->getMessage()]);
             
             event(new MessageWasSent($model, new MessageFailedResponse()));
