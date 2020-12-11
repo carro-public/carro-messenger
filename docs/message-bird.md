@@ -10,7 +10,7 @@ You can see webhooks list and can create and delete webhooks with this command
 php artisan whatsapp:message-bird:webhooks
 ```
 
-You need to careat a webhook events with `crated` to handle incoming message
+You need to careat a webhook events with `created` to handle incoming message
 
 You can see webhooks list and can create and delete..
 
