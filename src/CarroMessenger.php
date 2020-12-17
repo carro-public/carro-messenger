@@ -47,6 +47,7 @@ class CarroMessenger
             $response = WhatsAppMessageBird::sendTemplateMessage($data);
         
             $model = data_get($data, 'model');
+            $this->model = $model;
 
             if (config('carro_messenger.event_is_called') && !is_null($model)) {
                 event(new MessageWasSent($model, $response));
@@ -57,7 +58,7 @@ class CarroMessenger
             Log::error('WhatsApp template message failed @'. __FUNCTION__.' of '. __CLASS__,
             [$e->getMessage()]);
             
-            event(new MessageWasSent($model, new MessageFailedResponse()));
+            event(new MessageWasSent($this->model, new MessageFailedResponse()));
         }
         
     }
