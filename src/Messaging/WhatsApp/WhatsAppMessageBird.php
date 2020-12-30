@@ -78,10 +78,22 @@ class WhatsAppMessageBird
     public function sendWhatsAppImage($to, $imageUrl, $caption = null, $reportUrl = null)
     {
         $content = new Content();
-        $content->image = [
+
+        $data = [
             'url'       => $imageUrl,
             'caption'   => $caption,
         ];
+
+        $type = 'image';
+
+        if(@exif_imagetype($imageUrl)) {
+            $content->image = $data;
+        } else {
+            $content->file = $data;
+            $type = 'file';
+
+            $this->sendWhatsAppText($to, $caption);
+        }
 
         $sendMessage = new SendMessage();
         $sendMessage->from = $this->whatsAppchannelId;
@@ -89,7 +101,7 @@ class WhatsAppMessageBird
         $sendMessage->reportUrl = $reportUrl;
         $sendMessage->content = $content;
 
-        $sendMessage->type = 'image';
+        $sendMessage->type = $type;
 
         try {
             return $this->messageBirdClient->conversationSend->send($sendMessage);
