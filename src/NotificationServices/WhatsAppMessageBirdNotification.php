@@ -35,9 +35,9 @@ class WhatsAppMessageBirdNotification extends Notification
     /**
      * URL
      * 
-     * @var string $imageUrl
+     * @var string $mediaUrl
      */
-    protected $imageUrl;
+    protected $mediaUrl;
 
     /**
      * message send model
@@ -60,7 +60,7 @@ class WhatsAppMessageBirdNotification extends Notification
     {
         $this->to       = data_get($data, 'to');
         $this->message  = data_get($data, 'message');
-        $this->imageUrl = data_get($data, 'imageurl');
+        $this->mediaUrl = data_get($data, 'media_url');
         $this->model    = data_get($data, 'model');
         $this->reportUrl = data_get($data, 'report_url');
     }
@@ -85,13 +85,13 @@ class WhatsAppMessageBirdNotification extends Notification
     public function toWhatsApp($notifiable)
     {
         try {
-            if (is_null($this->imageUrl)) {
+            if (is_null($this->mediaUrl)) {
                 $response = WhatsAppMessageBird::sendWhatsAppText($this->to, $this->message, $this->reportUrl);
                 return $this->handleMessageSentEvent($response);
             }
     
-            // $response = WhatsAppMessageBird::sendWhatsAppImage($this->to, $this->imageUrl, $this->message, $this->reportUrl);
-            // $this->handleMessageSentEvent($response);
+            $response = WhatsAppMessageBird::sendWhatsAppImage($this->to, $this->mediaUrl, $this->message, $this->reportUrl);
+            $this->handleMessageSentEvent($response);
         } catch (Exception $e) {
             Log::error('WhatsApp message failed @'.__FUNCTION__.' of '.__CLASS__,
             [$e->getMessage()]);
