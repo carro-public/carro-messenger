@@ -90,8 +90,8 @@ class WhatsAppMessageBirdNotification extends Notification
                 return $this->handleMessageSentEvent($response);
             }
     
-            $response = WhatsAppMessageBird::sendWhatsAppImage($this->to, $this->imageUrl, $this->message, $this->reportUrl);
-            $this->handleMessageSentEvent($response);
+            // $response = WhatsAppMessageBird::sendWhatsAppImage($this->to, $this->imageUrl, $this->message, $this->reportUrl);
+            // $this->handleMessageSentEvent($response);
         } catch (Exception $e) {
             Log::error('WhatsApp message failed @'.__FUNCTION__.' of '.__CLASS__,
             [$e->getMessage()]);

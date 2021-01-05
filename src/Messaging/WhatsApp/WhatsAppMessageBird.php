@@ -91,8 +91,6 @@ class WhatsAppMessageBird
         } else {
             $content->file = $data;
             $type = 'file';
-
-            $this->sendWhatsAppText($to, $caption);
         }
 
         $sendMessage = new SendMessage();
