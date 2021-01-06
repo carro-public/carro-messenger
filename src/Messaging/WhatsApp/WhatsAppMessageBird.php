@@ -66,16 +66,16 @@ class WhatsAppMessageBird
     }
 
     /**
-     * Sending whatsApp message
+     * Sending WhatsApp media message
      * 
      * @param string $to
-     * @param string $imageUrl
+     * @param string $mediaUrl
      * @param string $caption
      * @param string $reportUrl
      *
      * @return Object
      */
-    public function sendWhatsAppImage($to, $imageUrl, $caption = null, $reportUrl = null)
+    public function sendWhatsAppMedia($to, $mediaUrl, $caption = null, $reportUrl = null)
     {
         $content = new Content();
 
