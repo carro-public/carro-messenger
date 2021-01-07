@@ -80,13 +80,13 @@ class WhatsAppMessageBird
         $content = new Content();
 
         $data = [
-            'url'       => $imageUrl,
+            'url'       => $mediaUrl,
             'caption'   => $caption,
         ];
 
         $type = 'image';
 
-        if(@exif_imagetype($imageUrl)) {
+        if(@exif_imagetype($mediaUrl)) {
             $content->image = $data;
         } else {
             $content->file = $data;
