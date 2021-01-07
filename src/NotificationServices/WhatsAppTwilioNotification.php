@@ -33,9 +33,9 @@ class WhatsAppTwilioNotification extends Notification
     /**
      * URL
      * 
-     * @var string $imageUrl
+     * @var string $mediaUrl
      */
-    protected $imageUrl;
+    protected $mediaUrl;
 
      /**
       * message send model
@@ -58,7 +58,7 @@ class WhatsAppTwilioNotification extends Notification
     {
         $this->to       = data_get($data, 'to');
         $this->message  = data_get($data, 'message');
-        $this->imageUrl = data_get($data, 'image_url');
+        $this->mediaUrl = data_get($data, 'media_url');
         $this->model    = data_get($data, 'model');
         $this->from     = data_get($data, 'from');
     }
@@ -83,9 +83,9 @@ class WhatsAppTwilioNotification extends Notification
     public function toWhatsApp($notifiable)
     {
         try {
-            $imageUrl = is_null($this->imageUrl) ? [] : [$this->imageUrl];
+            $mediaUrl = is_null($this->mediaUrl) ? [] : [$this->mediaUrl];
 
-            $response = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, $imageUrl, $this->from);
+            $response = WhatsAppTwilio::sendWhatsAppSMS($this->to, $this->message, $mediaUrl, $this->from);
             $this->handleMessageSentEvent($response);
         } catch (Exception $e) {
             Log::error('WhatsApp message failed@'.__FUNCTION__. ' of '.__CLASS__,
