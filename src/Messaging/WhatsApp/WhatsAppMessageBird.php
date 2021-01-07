@@ -80,13 +80,13 @@ class WhatsAppMessageBird
         $content = new Content();
 
         $data = [
-            'url'       => $imageUrl,
+            'url'       => $mediaUrl,
             'caption'   => $caption,
         ];
 
         $type = 'image';
 
-        if(@exif_imagetype($imageUrl)) {
+        if(@exif_imagetype($mediaUrl)) {
             $content->image = $data;
         } else {
             $content->file = $data;
@@ -104,7 +104,7 @@ class WhatsAppMessageBird
         try {
             return $this->messageBirdClient->conversationSend->send($sendMessage);
         } catch (\Exception $e) {
-            Log::error('WhatsApp Image message failed @'.__FUNCTION__.' of '.__CLASS__,
+            Log::error('WhatsApp Media message failed @'.__FUNCTION__.' of '.__CLASS__,
             [$e->getMessage()]);
         }
     }
