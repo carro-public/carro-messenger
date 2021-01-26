@@ -96,7 +96,7 @@ class WhatsAppMessageBirdNotification extends Notification
             Log::error('WhatsApp message failed @'.__FUNCTION__.' of '.__CLASS__,
             [
                 $e->getMessage(),
-                'CommunicationId' => optional($this->model)->id,   
+                'communication_id' => optional($this->model)->id,   
             ]);
             
             event(new MessageWasSent($this->model, new MessageFailedResponse()));
