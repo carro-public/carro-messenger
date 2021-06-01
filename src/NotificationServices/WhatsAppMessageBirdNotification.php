@@ -91,12 +91,14 @@ class WhatsAppMessageBirdNotification extends Notification
             }
     
             $response = WhatsAppMessageBird::sendWhatsAppMedia($this->to, $this->mediaUrl, $this->message, $this->reportUrl);
+            $this->response = $response;
             $this->handleMessageSentEvent($response);
         } catch (Exception $e) {
             Log::error('WhatsApp message failed @'.__FUNCTION__.' of '.__CLASS__,
             [
                 $e->getMessage(),
-                'communication_id' => optional($this->model)->id,   
+                'communication_id' => optional($this->model)->id,
+                'mb_response'   => $this->response,
             ]);
             
             event(new MessageWasSent($this->model, new MessageFailedResponse()));
