@@ -54,6 +54,13 @@ class WhatsAppMessageBirdNotification extends Notification
     protected $reportUrl;
 
     /**
+     * Response returned by MessageBird
+     *
+     * @var mixed $response
+     */
+    protected $response;
+
+    /**
      * Create a new notification instance.
      */
     public function __construct(array $data)

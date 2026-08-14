@@ -11,6 +11,8 @@ class MessageWasSent
 
     public $sentModel;
 
+    public $response;
+
     /**
      * Intiating a new instacnce for MessageWasSent
      *
